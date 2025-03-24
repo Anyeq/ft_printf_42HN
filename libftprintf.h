@@ -1,32 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   libftprintf.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/24 18:22:55 by asando            #+#    #+#             */
-/*   Updated: 2025/03/24 20:17:45 by asando           ###   ########.fr       */
+/*   Created: 2025/03/24 20:01:31 by asando            #+#    #+#             */
+/*   Updated: 2025/03/24 20:29:30 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-int	ft_printf(const char *format, ...)
+typedef struct	s_prse
 {
-	int	i;
-	size_t	n_char;
-	va_list	arg_list;
-
-	i = 0;
-	n_char = 0;
-	va_start(arg_list, format);
-	while (format[i] != '\0')
-	{
-		if (format[i] == '%')
-		{
-			//function to parse what is the FS and formatting
-		}
-		i++;
-	}
-	va_end(arg_list);
-	return (n_char);
-}
+	size_t	width;
+	size_t	precision;
+	char	flags;	
+}	t_prse;
