@@ -6,12 +6,17 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 20:01:31 by asando            #+#    #+#             */
-/*   Updated: 2025/03/24 20:29:30 by asando           ###   ########.fr       */
+/*   Updated: 2025/03/28 15:28:59 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 typedef struct	s_prse
 {
 	size_t	width;
 	size_t	precision;
-	char	flags;	
+	int		flag_zero;
+	int		flag_dot;
+	int		flag_minus;
+	int		flag_plus;
+	int		flag_hashtag;
+	int		flag_space;
 }	t_prse;
