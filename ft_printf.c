@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 18:22:55 by asando            #+#    #+#             */
-/*   Updated: 2025/03/24 20:17:45 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/11 17:07:50 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	ft_printf(const char *format, ...)
 	va_start(arg_list, format);
 	while (format[i] != '\0')
 	{
+		// when it reach % it will then parsing
+		// be carefull on the case of %%
 		if (format[i] == '%')
 		{
 			//function to parse what is the FS and formatting
