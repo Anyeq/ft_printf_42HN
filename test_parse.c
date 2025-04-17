@@ -9,8 +9,8 @@ int	main(void)
 	char *str;
 	int	i;
 
-	i = 1;
-	str = "#0-10d";
+	i = 0;
+	str = " 20d";
 	test = parse_format(str, &i);
 	printf("%d", 9);
 	printf("\n");
@@ -32,7 +32,7 @@ int	main(void)
 	printf("\n");
 	printf("%d", i);
 	printf("\n");
-	printf("%++0++10d", 4242);
+	printf("% 10d", 4242);
 	free(test);
 	return (0);
 }
