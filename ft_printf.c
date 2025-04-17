@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 18:22:55 by asando            #+#    #+#             */
-/*   Updated: 2025/04/17 09:53:12 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/17 10:13:22 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	ft_printf(const char *format, ...)
 				//this could be a proble refereing to i
 				prse_rslt = parse_format(&format[i], &i);
 				//CALL FORMATING FUNCTION
+				fmt_specifier(format[i], arg_list);
 				//CALL SPECIFIER THING
 				free(prse_rslt);
 			}
