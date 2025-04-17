@@ -6,18 +6,21 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 19:58:26 by asando            #+#    #+#             */
-/*   Updated: 2025/04/14 16:22:58 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/16 12:39:39 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "./libft/libft.h"
+#include "libftprintf.h"
+#include <stdio.h>
 //%[argument$][flags][width][.precision][length modifier]conversion
 
-static int	conver_spcf(unsigned char c){}
-static int	count_width_precision(const char *fmt_str, t_prse **prse)
+//static int	conver_spcf(unsigned char c){}
+static int	count_width_precision(const char *fmt_str, t_prse *prse)
 {
 	int	i;
 
 	i = 0;
-	if (fmt_str[i] == '.' && ft_isdigit(fmt_str[i]))
+	if (fmt_str[i] == '.')
 	{
 		prse->flag_dot = 1;
 		i++;
@@ -30,13 +33,13 @@ static int	count_width_precision(const char *fmt_str, t_prse **prse)
 	}
 	while (ft_isdigit(fmt_str[i]))
 	{
-		prse->width = 10 * prse->width + (fmt_str - '0');
+		prse->width = 10 * prse->width + (fmt_str[i] - '0');
 		i++;
 	}
 	return (i);
 }
-// 0 default or unused 1 used -1 overwrite
-static t_prse	*prse_init(t_prse **prse)
+// 0 default or unused 1 used
+static void	prse_init(t_prse *prse)
 {
 	prse->width = 0;
 	prse->precision = 0;
@@ -48,43 +51,50 @@ static t_prse	*prse_init(t_prse **prse)
 	prse->flag_hashtag = 0;
 }
 
-static int set_flags(unsigned char c, t_prse **prse)
+static int set_flags(unsigned char c, t_prse *prse)
 {
-	int	i;
-
-	i = 1;
-	if (c[i] == '0')
+	if (c == '0')
 		prse->flag_zero = 1;
-	if (c[i] == '-')
+	else if (c == '-')
 		prse->flag_minus = 1;
-	if (c[i] == '#')
+	else if (c == '#')
 		prse->flag_hashtag = 1;
-	if (c[i] == ' ')
+	else if (c == ' ')
 		prse->flag_space = 1;
-	if (c[i] == '+')
+	else if (c == '+')
 		prse->flag_plus = 1;
-	if (c[i] == '.')
+	else if (c == '.')
 		prse->flag_dot = 1;
+	else
+		return (0);
+	return (1);
 }
 //check what to return 
-int	parse_format(const char *fmt_str)
+t_prse *parse_format(const char *fmt_str, int *iter)
 {
 	int	i;
 	t_prse	*prse_rslt;
 
 	prse_rslt = malloc(sizeof(t_prse));
 	if (!prse_rslt)
-		return (1);
-	prse_init(&prse_rslt);
+		return (NULL);
+	prse_init(prse_rslt);
 	i = 0;
-	while (fmt_str[i] != '\0' && !ft_isalpha(fmt_str[i]))
+	while (!ft_isalpha(fmt_str[i]))
 	{
 		// if there is format checking consider to remove second condition
-		if ((!ft_isalnum(fmt_str[i]) && prse_rslt->width == 0 && fmt_str[i] != '.')
-			i += set_flags(fmt_str[i], &prse_rslt);
-		if (fmt_str[i] == '.' && ft_isdigit(fmt_str[i]))
-			i += count_width_precision(&fmt_str[i], &prse_rslt);
-		i++;
+		if (prse_rslt->width == 0 && (fmt_str[i] != '.' || fmt_str[i] == '0'))
+			i += set_flags(fmt_str[i], prse_rslt);
+		if (fmt_str[i] == '.' || ft_isdigit(fmt_str[i]))
+			i += count_width_precision(&fmt_str[i], prse_rslt);
 	}
-	return (i);
+	*iter = *iter + i;
+	return (prse_rslt);
 }
+
+// to consider
+// user add unhandle flag_dot
+// user add wrong formating
+// consider if there is no flag but number only
+
+// 0 is not detected
