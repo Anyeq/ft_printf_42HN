@@ -32,7 +32,8 @@ int	main(void)
 	printf("\n");
 	printf("%d", i);
 	printf("\n");
-	printf("% 10d", 4242);
+	printf("%+010d\n", -20);
+	printf("%0#7x", 12376890);
 	free(test);
 	return (0);
 }

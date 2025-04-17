@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 20:01:31 by asando            #+#    #+#             */
-/*   Updated: 2025/04/14 16:20:01 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/17 16:19:06 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 typedef struct	s_prse
@@ -19,4 +19,5 @@ typedef struct	s_prse
 	int		flag_plus;
 	int		flag_hashtag;
 	int		flag_space;
+	int		num_min;
 }	t_prse;

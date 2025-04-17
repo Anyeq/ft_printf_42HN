@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 19:58:26 by asando            #+#    #+#             */
-/*   Updated: 2025/04/17 09:25:06 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/17 16:19:39 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "./libft/libft.h"
@@ -49,6 +49,7 @@ static void	prse_init(t_prse *prse)
 	prse->flag_space = 0;
 	prse->flag_plus = 0;
 	prse->flag_hashtag = 0;
+	prse->num_min = 0;
 }
 
 static int set_flags(const char *fmt_str, t_prse *prse)
