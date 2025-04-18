@@ -1,15 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   mod_putnbr_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/03/19 08:29:08 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/17 16:34:30 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
+#include "libftprintf.h"
 /*
  * FUNCTION (G)
  * ==> put number into fd provided
@@ -27,7 +28,7 @@
  * REFERENCE
  * ==>
 */
-void	ft_putnbr_fd(int n, int fd)
+void	mod_putnbr_fd(int n, int fd, t_prse *prse)
 {
 	char	c;
 
@@ -38,12 +39,13 @@ void	ft_putnbr_fd(int n, int fd)
 	}
 	if (n == INT_MIN)
 	{
-		write(fd, "-2147483648", 11);
+		prse->num_min = 1;
+		write(fd, "2147483648", 11);
 		return ;
 	}
 	if (n < 0)
 	{
-		write(fd, "-", 1);
+		prse->num_min = 1;
 		n = n * -1;
 	}
 	if (n / 10 > 0)
