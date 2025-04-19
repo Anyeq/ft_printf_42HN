@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnum_base.c                                   :+:      :+:    :+:   */
+/*   ft_puthex.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/04/18 09:22:53 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/19 09:01:28 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
 #include <limits.h>
+#include <stdint.h>
 //#include "libft.h"
 //#include "libftprintf.h"
 /*
@@ -30,39 +31,38 @@
  * REFERENCE
  * ==>
 */
-static int	count_digit(unsigned int n, int nbase)
+static int	count_digit(uintptr_t n)
 {
 	int	n_digit;
 
 	n_digit = 0;
-	if (n == 0)
-		return (1);
 	while (n > 0)
 	{
-		n = n / nbase;
+		n = n / 16;
 		n_digit++;
 	}
 	return (n_digit);
 }
 
-static void	putnumbase_out(unsigned int n, int nbase, const char *base)
+static void	putptr_out(uintptr_t n)
 {
-	if (n == 0)
-	{
-		write(1, "0", 1);
-		return ;
-	}
-	if (n / nbase > 0)
-		putnumbase_out(n / nbase, nbase, base);
-	write(1, &base[n % nbase], 1);
+	if (n / 16 > 0)
+		putptr_out(n / 16);
+	write(STDOUT_FILENO, &("0123456789abcdef"[n % 16]), 1);
 	return ;
 }
 
-int	ft_putnum_base(unsigned int n, int nbase, const char *base)
+int	ft_putptr(void *n)
 {
 	int	n_digit;
 
-	n_digit = count_digit(n, nbase);
-	putnumbase_out(n, nbase, base);
-	return (n_digit);
+	if (n == NULL)
+	{
+		write(STDOUT_FILENO, "(nil)", 5);
+		return (5);
+	}
+	write(STDOUT_FILENO, "0x", 2);
+	n_digit = count_digit((uintptr_t)n);
+	putptr_out((uintptr_t)n);
+	return (n_digit + 2);
 }
