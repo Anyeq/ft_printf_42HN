@@ -6,40 +6,11 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 09:54:24 by asando            #+#    #+#             */
-/*   Updated: 2025/04/22 08:26:19 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/22 09:54:54 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft/libft.h"
 #include "libftprintf.h"
-
-static int	write_width(t_prse *prse, size_t nstr)
-{
-	int	nchar;
-
-	nchar = 0;
-	while (nchar < (prse->width - (nstr + prse->precision))
-	{
-		if (prse->sign_zero == 1)
-			write(STDOUT_FILENO, "0", 1);
-		else if (prse->sign_zero == 0)
-			write(STDOUT_FILENO, " ", 1);
-		nchar++;
-	}
-	return (nchar);
-}
-
-static int	write_precision(t_prse *prse, size_t nstr)
-{
-	int	nchar;
-
-	nchar = 0;
-	while (nchar < (prse->precision - nstr))
-	{
-		write(STDOUT_FILENO, "0", 1);
-		nchar++;
-	}
-	return (nchar);
-}
 
 static int	write_conversion(unsigned char c, va_list args, t_prse *prse)
 {
@@ -61,13 +32,4 @@ static int	write_conversion(unsigned char c, va_list args, t_prse *prse)
 	if (c == 'X')
 		nchar += ft_putnum_base(va_arg(args, unsigned int), 16, "0123456789ABCDEF");
 	return (nchar);
-}
-
-int	write_arg(unsigned char c, va_list *args, t_prse **prse)
-{
-	int	nchar;
-
-	nchar = 0;
-	nchar += write_conversion(c, args, prse);
-	return (0);
 }

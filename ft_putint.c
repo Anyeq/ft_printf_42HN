@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/04/18 08:50:40 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/22 09:51:01 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
@@ -77,6 +77,7 @@ int	ft_putint(int n)
 	int	n_digit;
 
 	n_digit = count_digit(n);
+	n_digit += write_wnp(prse, n_digit, &n, putint_put)
 	putint_out(n);
 	return (n_digit);
 }
