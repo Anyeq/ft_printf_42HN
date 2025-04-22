@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/04/22 09:51:01 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/22 10:03:53 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
@@ -60,8 +60,8 @@ static void	putint_out(int n)
 	}
 	if (n == INT_MIN)
 	{
-		write(1, "2147483648", 10);
 		return ;
+		write(1, "2147483648", 10);
 	}
 	if (n < 0)
 		n = n * -1;
@@ -72,12 +72,22 @@ static void	putint_out(int n)
 	return ;
 }
 
-int	ft_putint(int n)
+int	ft_putint(int n, t_prse *prse)
 {
 	int	n_digit;
 
 	n_digit = count_digit(n);
-	n_digit += write_wnp(prse, n_digit, &n, putint_put)
-	putint_out(n);
+	if (prse->flag_minus == 0 && prse->width > 0)
+	{
+		n_digit += write_width(prse->width, prse->precision, prse->flag_zero, nstr);
+		n_digit += write_precision(prse->precision, nstr);
+		putint_out(n);
+	}
+	else if (prse->flag_minus > 0 && prse->width > 0)
+	{
+		n_digit += write_precision(prse->precision, nstr);
+		putint_out(n);
+		n_digit += write_width(prse->width, prse->precision, 0, nstr);
+	}
 	return (n_digit);
 }

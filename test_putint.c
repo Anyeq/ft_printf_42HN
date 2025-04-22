@@ -23,9 +23,8 @@ int	main(void)
 //	printf("%d\n", ft_putchar('A'));
 //	printf("%p\n", &i);
 	printf("============================");
-	printf("============================");
-	printf("\n%d", ft_printf("Test --> %s hallo\n", "Hello world"));
-	printf("\n%d", ft_printf("Test --> %p hallo\n", &i));
+	//printf("\n%d", ft_printf("Test --> %s hallo\n", "Hello world"));
+	//printf("\n%d", ft_printf("Test --> %p hallo\n", &i));
 
 	return (0);
 }

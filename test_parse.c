@@ -35,7 +35,7 @@ int	main(void)
     //printf("\n");
 	printf("%p\n", &i);
 	i = printf("%.20s", str);
-	printf("%d", i);
+	printf("%-05d", i);
 	printf("%s\n", str);
 	printf("%.5c", 'A');
 	//printf("%0#7x", 12376890);

@@ -6,13 +6,12 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 09:54:24 by asando            #+#    #+#             */
-/*   Updated: 2025/04/22 09:54:54 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/22 11:19:30 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft/libft.h"
 #include "libftprintf.h"
 
-static int	write_conversion(unsigned char c, va_list args, t_prse *prse)
+int	write_arg(unsigned char c, va_list args, t_prse *prse)
 {
 	int	nchar;
 
@@ -24,7 +23,7 @@ static int	write_conversion(unsigned char c, va_list args, t_prse *prse)
 	else if (c == 'p')
 		nchar += ft_putptr(va_arg(args, void *));
 	else if (c == 'd' || c == 'i')
-		nchar += ft_putint(va_arg(args, int));
+		nchar += ft_putint(va_arg(args, int), prse);
 	else if (c == 'u')
 		nchar += ft_putunint(va_arg(args, unsigned int));
 	if (c == 'x')
