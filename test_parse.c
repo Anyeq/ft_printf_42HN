@@ -37,6 +37,7 @@ int	main(void)
 	i = printf("%.20s", str);
 	printf("%d", i);
 	printf("%s\n", str);
+	printf("%.5c", 'A');
 	//printf("%0#7x", 12376890);
 	//free(test);
 	return (0);

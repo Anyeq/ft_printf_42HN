@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 13:50:53 by asando            #+#    #+#             */
-/*   Updated: 2025/04/20 09:11:38 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/21 11:29:56 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
@@ -24,17 +24,8 @@
  * REFERENCE
  * ==>
 */
-int	ft_putstr(const char *s, int precision)
+int	ft_putchar(unsigned int s)
 {
-	int	i;
-
-	i = 0;
-	while (s[i] != '\0')
-	{
-		if (precision != 0 && i == precision)
-			return (i);
-		write(STDOUT_FILENO, &s[i], 1);
-		i++;
-	}
-	return (i);
+	write(STDOUT_FILENO, &s, 1);
+	return (1);
 }
