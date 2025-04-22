@@ -6,18 +6,30 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:40:56 by asando            #+#    #+#             */
-/*   Updated: 2025/04/22 10:04:56 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/22 13:00:09 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <unistd.h>
 #include "libftprintf.h"
 
-int	write_width(size_t width, size_t precision, int f_zero, size_t nstr)
+static int	count_str_size(int precision, int nstr)
+{
+	int	str_size;
+
+	if (precision > nstr)
+		str_size = precision;
+	else if (precision <= nstr)
+		str_size = nstr;
+	return (str_size);
+}
+
+int	write_width(int width, int precision, int f_zero, int nstr)
 {
 	int	nchar;
+	int	str_size;
 
+	str_size = count_str_size(precision, nstr);
 	nchar = 0;
-	while (nchar < (width - (nstr + precision))
+	while (nchar < (width - str_size))
 	{
 		if (f_zero == 1)
 			write(STDOUT_FILENO, "0", 1);
@@ -28,7 +40,7 @@ int	write_width(size_t width, size_t precision, int f_zero, size_t nstr)
 	return (nchar);
 }
 
-int	write_precision(size_t precision, int nstr)
+int	write_precision(int precision, int nstr)
 {
 	int	nchar;
 

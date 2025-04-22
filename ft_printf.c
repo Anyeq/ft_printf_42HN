@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 18:22:55 by asando            #+#    #+#             */
-/*   Updated: 2025/04/21 14:59:16 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/22 11:26:31 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libftprintf.h"
@@ -31,7 +31,7 @@ int	ft_printf(const char *format, ...)
 				//this could be a problem refereing to i
 				prse_rslt = parse_format(&format[i], &i);
 				//CALL FORMATING FUNCTION
-				n_char += write_conversion(format[i], arg_list, prse_rslt);
+				n_char += write_arg(format[i], arg_list, prse_rslt);
 				//CALL SPECIFIER THING
 				free(prse_rslt);
 			}

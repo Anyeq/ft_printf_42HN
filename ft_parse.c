@@ -6,15 +6,13 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 19:58:26 by asando            #+#    #+#             */
-/*   Updated: 2025/04/17 16:19:39 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/22 11:24:30 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "./libft/libft.h"
 #include "libftprintf.h"
-#include <stdio.h>
-//%[argument$][flags][width][.precision][length modifier]conversion
 
-//static int	conver_spcf(unsigned char c){}
+//%[argument$][flags][width][.precision][length modifier]conversion
 static int	count_width_precision(const char *fmt_str, t_prse *prse)
 {
 	int	i;
@@ -96,10 +94,3 @@ t_prse *parse_format(const char *fmt_str, int *iter)
 	*iter = *iter + i;
 	return (prse_rslt);
 }
-
-// to consider
-// user add unhandle flag_dot
-// user add wrong formating
-// consider if there is no flag but number only
-
-// 0 is not detected

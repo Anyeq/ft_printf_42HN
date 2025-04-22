@@ -6,11 +6,10 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/04/22 10:03:53 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/22 12:26:45 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <unistd.h>
-#include <limits.h>
+#include "libftprintf.h"
 //#include "libft.h"
 //#include "libftprintf.h"
 /*
@@ -75,8 +74,10 @@ static void	putint_out(int n)
 int	ft_putint(int n, t_prse *prse)
 {
 	int	n_digit;
+	int	nstr;
 
-	n_digit = count_digit(n);
+	nstr = count_digit(n);
+	n_digit = nstr;
 	if (prse->flag_minus == 0 && prse->width > 0)
 	{
 		n_digit += write_width(prse->width, prse->precision, prse->flag_zero, nstr);
@@ -89,5 +90,6 @@ int	ft_putint(int n, t_prse *prse)
 		putint_out(n);
 		n_digit += write_width(prse->width, prse->precision, 0, nstr);
 	}
+	putint_out(n);
 	return (n_digit);
 }
