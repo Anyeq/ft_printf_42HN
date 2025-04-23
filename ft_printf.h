@@ -6,14 +6,17 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 20:01:31 by asando            #+#    #+#             */
-/*   Updated: 2025/04/23 16:04:04 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/23 22:58:10 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdlib.h>
-#include <stdint.h>
-#include <unistd.h>
-#include <stdarg.h>
-#include <limits.h>
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
+
+# include <stdlib.h>
+# include <stdint.h>
+# include <unistd.h>
+# include <stdarg.h>
+# include <limits.h>
 
 typedef struct s_prse
 {
@@ -44,3 +47,5 @@ int		count_digit_int(int n);
 int		count_digit_uint(unsigned int n);
 int		count_digit_nbase(unsigned int n, int nbase);
 int		ft_printf(const char *fmt, ...);
+
+#endif
