@@ -6,12 +6,10 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/04/22 12:26:45 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/23 12:15:04 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libftprintf.h"
-//#include "libft.h"
-//#include "libftprintf.h"
 /*
  * FUNCTION (G)
  * ==> put number into fd provided
@@ -29,25 +27,6 @@
  * REFERENCE
  * ==>
 */
-static int	count_digit(int n)
-{
-	int	n_digit;
-
-	n_digit = 0;
-	if (n == INT_MIN)
-		return (10);
-	else if (n == 0)
-		return (1);
-	if (n < 0)
-		n = n * -1;
-	while (n > 0)
-	{
-		n = n / 10;
-		n_digit++;
-	}
-	return (n_digit);
-}
-
 static void	putint_out(int n)
 {
 	char	c;
@@ -76,7 +55,7 @@ int	ft_putint(int n, t_prse *prse)
 	int	n_digit;
 	int	nstr;
 
-	nstr = count_digit(n);
+	nstr = count_digit_int(n);
 	n_digit = nstr;
 	if (prse->flag_minus == 0 && prse->width > 0)
 	{

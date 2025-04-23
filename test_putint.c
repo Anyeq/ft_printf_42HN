@@ -20,6 +20,7 @@ int	main(void)
 	ft_printf("This is a string ==> %13.15s\n", "Hello world");
 	ft_printf("This is a pointer ==> %.20p hi\n", &i);
 	ft_printf("This is a pointer ==> %p\n", &i);
+	ft_printf("This is a pointer ==> %-15p\n", NULL);
 
 	return (i);
 }

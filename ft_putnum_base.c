@@ -6,11 +6,10 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/04/18 09:22:53 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/23 12:14:22 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <unistd.h>
-#include <limits.h>
+#include "libftprintf.h"
 //#include "libft.h"
 //#include "libftprintf.h"
 /*
@@ -30,21 +29,6 @@
  * REFERENCE
  * ==>
 */
-static int	count_digit(unsigned int n, int nbase)
-{
-	int	n_digit;
-
-	n_digit = 0;
-	if (n == 0)
-		return (1);
-	while (n > 0)
-	{
-		n = n / nbase;
-		n_digit++;
-	}
-	return (n_digit);
-}
-
 static void	putnumbase_out(unsigned int n, int nbase, const char *base)
 {
 	if (n == 0)
@@ -62,7 +46,7 @@ int	ft_putnum_base(unsigned int n, int nbase, const char *base)
 {
 	int	n_digit;
 
-	n_digit = count_digit(n, nbase);
+	n_digit = count_digit_nbase(n, nbase);
 	putnumbase_out(n, nbase, base);
 	return (n_digit);
 }

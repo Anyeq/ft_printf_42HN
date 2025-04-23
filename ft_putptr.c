@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/04/23 11:06:56 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/23 12:10:44 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libftprintf.h"
@@ -27,19 +27,6 @@
  * REFERENCE
  * ==>
 */
-static int	count_digit(uintptr_t n)
-{
-	int	n_digit;
-
-	n_digit = 0;
-	while (n > 0)
-	{
-		n = n / 16;
-		n_digit++;
-	}
-	return (n_digit);
-}
-
 static void	putptr_out(uintptr_t n)
 {
 	if (n / 16 > 0)
@@ -57,38 +44,71 @@ static int	putptr_main(void *n)
 		write(STDOUT_FILENO, "(nil)", 5);
 		return (5);
 	}
-	n_digit = count_digit((uintptr_t)n);
+	n_digit = count_digit_ptr((uintptr_t)n);
 	putptr_out((uintptr_t)n);
 	return (n_digit);
 }
 
-int	ft_putptr(void *n, t_prse *prse)
+static int	count_nstr(int precision)
 {
-	int	n_digit;
-	int	str_size;
+	int	nstr;
 
-	str_size = 14;
-	n_digit = 0;
-	if (prse->precision > 12)
-		str_size = (prse->precision - 12) + 14;
+	nstr = 14;
+	if (precision > 12)
+		nstr = (precision - 12) + 14;
+	return (nstr);
+}
+
+static int	null_case(t_prse *prse)
+{
+	int	nd;
+
+	nd = 5;
 	if ((prse->width > 0 || prse->precision > 0) && prse->flag_minus == 0)
 	{
-		n_digit += write_width(prse->width, prse->precision, prse->flag_zero, str_size);
-		n_digit += write_sign(prse->flag_plus, 42, "0x");
-		n_digit += write_precision(prse->precision, 12);
-		n_digit += putptr_main(n);
+		nd += write_width(prse->width, prse->precision, prse->flag_zero, 5);
+		write(STDOUT_FILENO, "(nil)", 5);
+		return (nd);
 	}
 	else if ((prse->width > 0 || prse->precision > 0) && prse->flag_minus == 1)
 	{
-		n_digit += write_sign(prse->flag_plus, 42, "0x");
-		n_digit += write_precision(prse->precision, 12);
-		n_digit += putptr_main(n);
-		n_digit += write_width(prse->width, prse->precision, prse->flag_zero, str_size);
+		write(STDOUT_FILENO, "(nil)", 5);
+		nd += write_width(prse->width, prse->precision, prse->flag_zero, 5);
+		return (nd);
 	}
 	else
 	{
-		n_digit += write_sign(prse->flag_plus, 42, "0x");
-		n_digit += putptr_main(n);
+		write(STDOUT_FILENO, "(nil)", 5);
+		return (nd);
 	}
-	return (n_digit);
+	return (nd);
+}
+
+int	ft_putptr(void *n, t_prse *prse)
+{
+	int	nd;
+	int	nstr;
+
+	nstr = count_nstr(prse->precision);
+	nd = 0;
+	if (n == NULL)
+	{
+		nd += null_case(prse);
+		return (nd);
+	}
+	if (prse->flag_minus == 0)
+	{
+		nd += write_width(prse->width, prse->precision, prse->flag_zero, nstr);
+		nd += write_sign(prse->flag_plus, 42, "0x");
+		nd += write_precision(prse->precision, 12);
+		nd += putptr_main(n);
+	}
+	else if (prse->flag_minus == 1)
+	{
+		nd += write_sign(prse->flag_plus, 42, "0x");
+		nd += write_precision(prse->precision, 12);
+		nd += putptr_main(n);
+		nd += write_width(prse->width, prse->precision, prse->flag_zero, nstr);
+	}
+	return (nd);
 }

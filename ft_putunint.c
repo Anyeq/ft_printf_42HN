@@ -6,11 +6,10 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/04/18 09:04:00 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/23 12:14:41 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <unistd.h>
-#include <limits.h>
+#include "libftprintf.h"
 //#include "libft.h"
 //#include "libftprintf.h"
 /*
@@ -30,21 +29,6 @@
  * REFERENCE
  * ==>
 */
-static int	count_digit(unsigned int n)
-{
-	int	n_digit;
-
-	n_digit = 0;
-	if (n == 0)
-		return (1);
-	while (n > 0)
-	{
-		n = n / 10;
-		n_digit++;
-	}
-	return (n_digit);
-}
-
 static void	putunint_out(unsigned int n)
 {
 	char	c;
@@ -65,7 +49,7 @@ int	ft_putunint(unsigned int n)
 {
 	int	n_digit;
 
-	n_digit = count_digit(n);
+	n_digit = count_digit_uint(n);
 	putunint_out(n);
 	return (n_digit);
 }
