@@ -1,6 +1,4 @@
 #include <stdio.h>
-#include <stdint.h>
-#include <limits.h>
 #include "libftprintf.h"
 
 int	main(void)
@@ -20,6 +18,8 @@ int	main(void)
 	ft_printf("Hello this is a test\n");
 	ft_printf("This is a charachter ==> %05c\n", 'A');
 	ft_printf("This is a string ==> %13.15s\n", "Hello world");
+	ft_printf("This is a pointer ==> %.20p hi\n", &i);
+	ft_printf("This is a pointer ==> %p\n", &i);
 
 	return (i);
 }

@@ -6,14 +6,10 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/04/19 09:01:28 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/23 11:06:56 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <unistd.h>
-#include <limits.h>
-#include <stdint.h>
-//#include "libft.h"
-//#include "libftprintf.h"
+#include "libftprintf.h"
 /*
  * FUNCTION (G)
  * ==> put number into fd provided
@@ -52,7 +48,7 @@ static void	putptr_out(uintptr_t n)
 	return ;
 }
 
-int	ft_putptr(void *n)
+static int	putptr_main(void *n)
 {
 	int	n_digit;
 
@@ -61,8 +57,38 @@ int	ft_putptr(void *n)
 		write(STDOUT_FILENO, "(nil)", 5);
 		return (5);
 	}
-	write(STDOUT_FILENO, "0x", 2);
 	n_digit = count_digit((uintptr_t)n);
 	putptr_out((uintptr_t)n);
-	return (n_digit + 2);
+	return (n_digit);
+}
+
+int	ft_putptr(void *n, t_prse *prse)
+{
+	int	n_digit;
+	int	str_size;
+
+	str_size = 14;
+	n_digit = 0;
+	if (prse->precision > 12)
+		str_size = (prse->precision - 12) + 14;
+	if ((prse->width > 0 || prse->precision > 0) && prse->flag_minus == 0)
+	{
+		n_digit += write_width(prse->width, prse->precision, prse->flag_zero, str_size);
+		n_digit += write_sign(prse->flag_plus, 42, "0x");
+		n_digit += write_precision(prse->precision, 12);
+		n_digit += putptr_main(n);
+	}
+	else if ((prse->width > 0 || prse->precision > 0) && prse->flag_minus == 1)
+	{
+		n_digit += write_sign(prse->flag_plus, 42, "0x");
+		n_digit += write_precision(prse->precision, 12);
+		n_digit += putptr_main(n);
+		n_digit += write_width(prse->width, prse->precision, prse->flag_zero, str_size);
+	}
+	else
+	{
+		n_digit += write_sign(prse->flag_plus, 42, "0x");
+		n_digit += putptr_main(n);
+	}
+	return (n_digit);
 }

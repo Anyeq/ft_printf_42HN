@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 09:54:24 by asando            #+#    #+#             */
-/*   Updated: 2025/04/22 13:22:12 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/23 09:59:46 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libftprintf.h"
@@ -21,7 +21,7 @@ int	write_arg(unsigned char c, va_list args, t_prse *prse)
 	else if (c == 's')
 		nchar += ft_putstr(va_arg(args, char *), prse);
 	else if (c == 'p')
-		nchar += ft_putptr(va_arg(args, void *));
+		nchar += ft_putptr(va_arg(args, void *), prse);
 	else if (c == 'd' || c == 'i')
 		nchar += ft_putint(va_arg(args, int), prse);
 	else if (c == 'u')
