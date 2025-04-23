@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_utils.c                                         :+:      :+:    :+:   */
+/*   ft_width_precision_utils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:40:56 by asando            #+#    #+#             */
-/*   Updated: 2025/04/23 10:26:58 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/23 18:12:12 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libftprintf.h"
@@ -33,7 +33,7 @@ int	write_width(int width, int precision, int f_zero, int nstr)
 	{
 		if (f_zero == 1 && precision == 0)
 			write(STDOUT_FILENO, "0", 1);
-		else if (f_zero == 0)
+		else if (precision > 0 || f_zero == 0)
 			write(STDOUT_FILENO, " ", 1);
 		nchar++;
 	}

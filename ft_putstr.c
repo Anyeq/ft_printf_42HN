@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 13:50:53 by asando            #+#    #+#             */
-/*   Updated: 2025/04/22 13:21:23 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/23 18:23:56 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libftprintf.h"
@@ -42,16 +42,16 @@ static int	putstr_out(const char *s, int precision)
 
 int	ft_putstr(const char *s, t_prse *prse)
 {
-	int n_digit;
+	int	n_digit;
 	int	len_str;
 	int	precision;
 
 	precision = prse->precision;
 	n_digit = 0;
 	len_str = ft_strlen(s);
-	if (len_str > precision)
+	if (len_str > precision && precision != 0)
 		len_str = 0;
-	else if (len_str <= precision)
+	else if (len_str <= precision && precision != 0)
 		precision = 0;
 	if (prse->width > 0 && prse->flag_minus == 0)
 	{

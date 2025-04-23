@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/04/23 12:14:22 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/23 22:05:13 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libftprintf.h"
@@ -42,11 +42,26 @@ static void	putnumbase_out(unsigned int n, int nbase, const char *base)
 	return ;
 }
 
-int	ft_putnum_base(unsigned int n, int nbase, const char *base)
+int	ft_putnum_base(unsigned int n, int nbase, const char *base, t_prse *prse)
 {
-	int	n_digit;
+	int	nstr;
+	int	nd;
 
-	n_digit = count_digit_nbase(n, nbase);
-	putnumbase_out(n, nbase, base);
-	return (n_digit);
+	nstr = count_digit_nbase(n, nbase);
+	nd = nstr;
+	if (prse->flag_minus == 0)
+	{
+		nd += write_width(prse->width, prse->precision, prse->flag_zero, nstr);
+		nd += write_sign(prse->flag_plus, 42, NULL);
+		nd += write_precision(prse->precision, nstr);
+		putnumbase_out(n, nbase, base);
+	}
+	else if (prse->flag_minus == 1)
+	{
+		nd += write_sign(prse->flag_plus, 42, NULL);
+		nd += write_precision(prse->precision, nstr);
+		putnumbase_out(n, nbase, base);
+		nd += write_width(prse->width, prse->precision, prse->flag_zero, nstr);
+	}
+	return (nd);
 }

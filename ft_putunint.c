@@ -6,12 +6,10 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/04/23 12:14:41 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/23 18:52:00 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libftprintf.h"
-//#include "libft.h"
-//#include "libftprintf.h"
 /*
  * FUNCTION (G)
  * ==> put number into fd provided
@@ -45,11 +43,24 @@ static void	putunint_out(unsigned int n)
 	return ;
 }
 
-int	ft_putunint(unsigned int n)
+int	ft_putunint(unsigned int n, t_prse *prse)
 {
-	int	n_digit;
+	int	nstr;
+	int	nd;
 
-	n_digit = count_digit_uint(n);
-	putunint_out(n);
-	return (n_digit);
+	nstr = count_digit_uint(n);
+	nd = nstr;
+	if (prse->flag_minus == 0)
+	{
+		nd += write_width(prse->width, prse->precision, prse->flag_zero, nstr);
+		nd += write_precision(prse->precision, nstr);
+		putunint_out(n);
+	}
+	else if (prse->flag_minus == 1)
+	{
+		nd += write_precision(prse->precision, nstr);
+		putunint_out(n);
+		nd += write_width(prse->width, prse->precision, prse->flag_zero, nstr);
+	}
+	return (nd);
 }

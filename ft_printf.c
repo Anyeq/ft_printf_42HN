@@ -6,15 +6,22 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 18:22:55 by asando            #+#    #+#             */
-/*   Updated: 2025/04/22 11:26:31 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/23 16:38:52 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libftprintf.h"
 
+static void	printf_out(const char *fmt, int *i, int *nchar)
+{
+	write(1, &fmt[*i], 1);
+	*i += 1;
+	*nchar += 1;
+}
+
 int	ft_printf(const char *format, ...)
 {
-	int	i;
-	size_t	n_char;
+	int		i;
+	int		n_char;
 	va_list	arg_list;
 	t_prse	*prse_rslt;
 
@@ -28,17 +35,13 @@ int	ft_printf(const char *format, ...)
 			i++;
 			if (format[i] != '%')
 			{
-				//this could be a problem refereing to i
 				prse_rslt = parse_format(&format[i], &i);
-				//CALL FORMATING FUNCTION
 				n_char += write_arg(format[i], arg_list, prse_rslt);
-				//CALL SPECIFIER THING
 				free(prse_rslt);
+				i++;
 			}
 		}
-		write(1, &format[i], 1);
-		i++;
-		n_char++;
+		printf_out(format, &i, &n_char);
 	}
 	va_end(arg_list);
 	return (n_char);

@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/04/23 12:15:04 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/23 18:07:47 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libftprintf.h"
@@ -50,25 +50,40 @@ static void	putint_out(int n)
 	return ;
 }
 
+static void	width_precision_fix(int n, int f_plus, int *nstr, int *prcs)
+{
+	if (n < 0 || f_plus == 1)
+	{
+		*nstr += 1;
+		*prcs += 1;
+	}
+}
+
 int	ft_putint(int n, t_prse *prse)
 {
-	int	n_digit;
+	int	nd;
 	int	nstr;
+	int	nstr_prcs;
+	int	prcs;
 
 	nstr = count_digit_int(n);
-	n_digit = nstr;
-	if (prse->flag_minus == 0 && prse->width > 0)
+	nstr_prcs = count_digit_int(n);
+	nd = nstr;
+	prcs = prse->precision;
+	width_precision_fix(n, prse->flag_plus, &nstr, &prcs);
+	if (prse->flag_minus == 0)
 	{
-		n_digit += write_width(prse->width, prse->precision, prse->flag_zero, nstr);
-		n_digit += write_precision(prse->precision, nstr);
+		nd += write_width(prse->width, prcs, prse->flag_zero, nstr);
+		nd += write_sign(prse->flag_plus, n, NULL);
+		nd += write_precision(prse->precision, nstr_prcs);
 		putint_out(n);
 	}
-	else if (prse->flag_minus > 0 && prse->width > 0)
+	else if (prse->flag_minus == 1)
 	{
-		n_digit += write_precision(prse->precision, nstr);
+		nd += write_sign(prse->flag_plus, n, NULL);
+		nd += write_precision(prse->precision, nstr_prcs);
 		putint_out(n);
-		n_digit += write_width(prse->width, prse->precision, 0, nstr);
+		nd += write_width(prse->width, prcs, prse->flag_zero, nstr);
 	}
-	putint_out(n);
-	return (n_digit);
+	return (nd);
 }
