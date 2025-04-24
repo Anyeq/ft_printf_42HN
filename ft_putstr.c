@@ -6,24 +6,11 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 13:50:53 by asando            #+#    #+#             */
-/*   Updated: 2025/04/23 23:05:54 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/24 13:22:12 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
-/*
- * FUNCTION (G)
- * ==> put string into file decriptor provided
- * CALLED FUNCTION
- * ==> ft_puchar_fd(libft.h)
- * PARAMETER (n = 2)
- * ==> 1.char 2.int
- * WORK
- * ==> put string into fd by calling fd_puchar_fd to every character
- * RETURN
- * ==> none
- * REFERENCE
- * ==>
-*/
+
 static int	putstr_out(const char *s, int precision)
 {
 	int	i;
@@ -39,12 +26,20 @@ static int	putstr_out(const char *s, int precision)
 	return (i);
 }
 
+static int	null_case(void)
+{
+	write(STDOUT_FILENO, "(null)", 6);
+	return (6);
+}
+
 int	ft_putstr(const char *s, t_prse *prse)
 {
 	int	n_digit;
 	int	len_str;
 	int	precision;
 
+	if (s == NULL)
+		return (null_case());
 	precision = prse->precision;
 	n_digit = 0;
 	len_str = ft_strlen(s);
@@ -52,17 +47,15 @@ int	ft_putstr(const char *s, t_prse *prse)
 		len_str = 0;
 	else if (len_str <= precision && precision != 0)
 		precision = 0;
-	if (prse->width > 0 && prse->flag_minus == 0)
+	if (prse->flag_minus == 0)
 	{
 		n_digit += write_width(prse->width, precision, 0, len_str);
 		n_digit += putstr_out(s, prse->precision);
 	}
-	else if (prse->width > 0 && prse->flag_minus == 1)
+	else if (prse->flag_minus == 1)
 	{
 		n_digit += putstr_out(s, prse->precision);
 		n_digit += write_width(prse->width, precision, 0, len_str);
 	}
-	else
-		n_digit += putstr_out(s, prse->precision);
 	return (n_digit);
 }
