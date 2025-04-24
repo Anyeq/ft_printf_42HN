@@ -6,12 +6,12 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 09:54:24 by asando            #+#    #+#             */
-/*   Updated: 2025/04/23 16:11:30 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/24 12:11:47 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libftprintf.h"
+#include "ft_printf.h"
 
-int	write_arg(unsigned char c, va_list args, t_prse *prse)
+int	write_arg(unsigned char c, va_list args, t_prse *prse, int *i)
 {
 	int			nchar;
 	const char	*xsmall;
@@ -22,6 +22,8 @@ int	write_arg(unsigned char c, va_list args, t_prse *prse)
 	nchar = 0;
 	if (c == 'c')
 		nchar += ft_putchar(va_arg(args, unsigned int), prse);
+	else if (c == '%')
+		nchar += ft_putchar('%', prse);
 	else if (c == 's')
 		nchar += ft_putstr(va_arg(args, char *), prse);
 	else if (c == 'p')
@@ -30,9 +32,10 @@ int	write_arg(unsigned char c, va_list args, t_prse *prse)
 		nchar += ft_putint(va_arg(args, int), prse);
 	else if (c == 'u')
 		nchar += ft_putunint(va_arg(args, unsigned int), prse);
-	if (c == 'x')
+	else if (c == 'x')
 		nchar += ft_putnum_base(va_arg(args, unsigned int), 16, xsmall, prse);
-	if (c == 'X')
+	else if (c == 'X')
 		nchar += ft_putnum_base(va_arg(args, unsigned int), 16, xbig, prse);
+	*i += 1;
 	return (nchar);
 }

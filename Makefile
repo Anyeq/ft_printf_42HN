@@ -6,7 +6,7 @@
 #    By: asando <asando@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/23 22:07:48 by asando            #+#    #+#              #
-#    Updated: 2025/04/23 22:44:25 by asando           ###   ########.fr        #
+#    Updated: 2025/04/23 23:20:37 by asando           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 COMP = cc
@@ -25,11 +25,12 @@ LIBFT_DIR = ./libft
 
 LIBFT = $(LIBFT_DIR)/libft.a
 
-all: $(NAME) $(LIBFT)
+all: $(NAME)
 
 bonus: all
 
-$(NAME): $(OBJS)
+$(NAME): $(LIBFT) $(OBJS)
+	cp $(LIBFT) $(NAME)
 	ar crs $@ $^
 
 $(LIBFT):

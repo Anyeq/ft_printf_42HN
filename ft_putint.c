@@ -6,10 +6,10 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/04/23 18:07:47 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/23 23:04:47 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libftprintf.h"
+#include "ft_printf.h"
 /*
  * FUNCTION (G)
  * ==> put number into fd provided

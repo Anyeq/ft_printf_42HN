@@ -6,10 +6,10 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:40:56 by asando            #+#    #+#             */
-/*   Updated: 2025/04/23 18:12:12 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/23 23:06:32 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libftprintf.h"
+#include "ft_printf.h"
 
 static int	count_str_size(int precision, int nstr)
 {

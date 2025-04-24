@@ -6,16 +6,56 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 18:22:55 by asando            #+#    #+#             */
-/*   Updated: 2025/04/23 16:38:52 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/24 13:03:47 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libftprintf.h"
+#include "ft_printf.h"
 
-static void	printf_out(const char *fmt, int *i, int *nchar)
+static int	printf_out(const char *fmt, int *i)
 {
 	write(1, &fmt[*i], 1);
 	*i += 1;
-	*nchar += 1;
+	return (1);
+}
+
+static int	check_format(const char *format)
+{
+	int	i;
+	int	sign_exist;
+
+	i = 0;
+	while (format[i] != '\0')
+	{
+		if (format[i] == '%')
+		{
+			sign_exist = 1;
+			i++;
+			while (!ft_isalpha(format[i]) && format[i] != '%')
+			{
+				if (format[i] == '\0' && sign_exist == 1)
+					return (-1);
+				i++;
+			}
+			if (format[i] == '%')
+				sign_exist = 0;
+		}
+		i++;
+	}
+	return (0);
+}
+
+static int	print_arg(const char *fmt, t_prse *prse, va_list args, int *iter)
+{
+	int	i;
+	int	n_char;
+
+	n_char = 0;
+	i = 1;
+	i += parse_format(&fmt[i], prse);
+	if (ft_isalpha(fmt[i]) || fmt[i] == '%')
+		n_char = write_arg(fmt[i], args, prse, &i);
+	*iter += i;
+	return (n_char);
 }
 
 int	ft_printf(const char *format, ...)
@@ -26,23 +66,22 @@ int	ft_printf(const char *format, ...)
 	t_prse	*prse_rslt;
 
 	i = 0;
-	n_char = 0;
+	n_char = check_format(format);
+	prse_rslt = malloc(sizeof(t_prse));
+	if (!prse_rslt)
+		return (0);
 	va_start(arg_list, format);
-	while (format[i] != '\0')
+	while (format[i] != '\0' && n_char >= 0)
 	{
-		if (format[i] == '%')
+		while (format[i] == '%')
 		{
-			i++;
-			if (format[i] != '%')
-			{
-				prse_rslt = parse_format(&format[i], &i);
-				n_char += write_arg(format[i], arg_list, prse_rslt);
-				free(prse_rslt);
-				i++;
-			}
+			n_char += print_arg(&format[i], prse_rslt, arg_list, &i);
+			if (format[i] == '\0')
+				return (n_char);
 		}
-		printf_out(format, &i, &n_char);
+		n_char += printf_out(format, &i);
 	}
+	free(prse_rslt);
 	va_end(arg_list);
 	return (n_char);
 }

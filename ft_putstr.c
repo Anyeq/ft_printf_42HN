@@ -6,11 +6,10 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 13:50:53 by asando            #+#    #+#             */
-/*   Updated: 2025/04/23 18:23:56 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/23 23:05:54 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libftprintf.h"
-#include "./libft/libft.h"
+#include "ft_printf.h"
 /*
  * FUNCTION (G)
  * ==> put string into file decriptor provided
