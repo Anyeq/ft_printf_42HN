@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:40:56 by asando            #+#    #+#             */
-/*   Updated: 2025/04/23 23:06:32 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/25 13:47:54 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -15,6 +15,7 @@ static int	count_str_size(int precision, int nstr)
 {
 	int	str_size;
 
+	str_size = 0;
 	if (precision > nstr)
 		str_size = precision;
 	else if (precision <= nstr)
@@ -53,17 +54,19 @@ int	write_precision(int precision, int nstr)
 	return (nchar);
 }
 
-int	write_sign(int flag_plus, int num, char *sign)
+int	write_sign(t_prse *prse, int num, char *sign)
 {
 	int	nchar;
 
 	nchar = 0;
+	if (prse->precision == 0 && prse->flag_dot == 1)
+		return (nchar);
 	if (num < 0)
 	{
 		write(STDOUT_FILENO, "-", 1);
 		nchar++;
 	}
-	else if (num > 0 && flag_plus == 1)
+	else if (num > 0 && prse->flag_plus == 1)
 	{
 		write(STDOUT_FILENO, "+", 1);
 		nchar++;

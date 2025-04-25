@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 20:01:31 by asando            #+#    #+#             */
-/*   Updated: 2025/04/24 09:40:51 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/25 12:17:21 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FT_PRINTF_H
@@ -42,7 +42,7 @@ int		ft_putnum_base(unsigned int n, int nbase, const char *base,
 int		write_width(int width, int precision, int f_zero, int nstr);
 int		write_precision(int precision, int nstr);
 int		write_arg(unsigned char s, va_list arg, t_prse *prse, int *i);
-int		write_sign(int flag_plus, int num, char *sign);
+int		write_sign(t_prse *prse, int num, char *sign);
 int		count_digit_ptr(uintptr_t n);
 int		count_digit_int(int n);
 int		count_digit_uint(unsigned int n);

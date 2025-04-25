@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/04/24 13:07:12 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/25 12:18:06 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -33,14 +33,24 @@ static int	putptr_main(void *n)
 	return (n_digit);
 }
 
-static int	count_nstr(int precision)
+static int	count_nstr(void *n, int precision)
 {
-	int	nstr;
+	int			main_digit;
+	uintptr_t	num;
 
-	nstr = 14;
-	if (precision > 12)
-		nstr = (precision - 12) + 14;
-	return (nstr);
+	main_digit = 0;
+	num = (uintptr_t)n;
+	if (n == NULL)
+		return (main_digit);
+	while (num / 16 > 0)
+	{
+		num /= 16;
+		main_digit++;
+	}
+	main_digit++;
+	if (precision > main_digit)
+		main_digit = precision;
+	return (main_digit + 2);
 }
 
 static int	null_case(t_prse *prse)
@@ -73,7 +83,7 @@ int	ft_putptr(void *n, t_prse *prse)
 	int	nd;
 	int	nstr;
 
-	nstr = count_nstr(prse->precision);
+	nstr = count_nstr(n, prse->precision);
 	nd = 0;
 	if (n == NULL)
 	{
@@ -83,14 +93,14 @@ int	ft_putptr(void *n, t_prse *prse)
 	if (prse->flag_minus == 0)
 	{
 		nd += write_width(prse->width, prse->precision, prse->flag_zero, nstr);
-		nd += write_sign(prse->flag_plus, 42, "0x");
-		nd += write_precision(prse->precision, 12);
+		nd += write_sign(prse, 42, "0x");
+		nd += write_precision(prse->precision, nstr - 2);
 		nd += putptr_main(n);
 	}
 	else if (prse->flag_minus == 1)
 	{
-		nd += write_sign(prse->flag_plus, 42, "0x");
-		nd += write_precision(prse->precision, 12);
+		nd += write_sign(prse, 42, "0x");
+		nd += write_precision(prse->precision, nstr - 2);
 		nd += putptr_main(n);
 		nd += write_width(prse->width, prse->precision, prse->flag_zero, nstr);
 	}

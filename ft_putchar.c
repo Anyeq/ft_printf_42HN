@@ -6,40 +6,27 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 13:50:53 by asando            #+#    #+#             */
-/*   Updated: 2025/04/24 08:10:27 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/25 09:21:33 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
-/*
- * FUNCTION (G)
- * ==> put string into file decriptor provided
- * CALLED FUNCTION
- * ==> ft_puchar_fd(libft.h)
- * PARAMETER (n = 2)
- * ==> 1.char 2.int
- * WORK
- * ==> put string into fd by calling fd_puchar_fd to every character
- * RETURN
- * ==> none
- * REFERENCE
- * ==>
-*/
+
 int	ft_putchar(unsigned int s, t_prse *prse)
 {
 	int	n_digit;
 
 	n_digit = 0;
-	if (prse->width > 0 && prse->flag_minus == 0 && prse->no_spec == 0)
+	if (prse->flag_minus == 0 && prse->no_spec == 0)
 	{
 		n_digit += write_width(prse->width, prse->precision, 0, 1);
 		write(STDOUT_FILENO, &s, 1);
-		return (n_digit);
+		return (n_digit + 1);
 	}
-	else if (prse->width > 0 && prse->flag_minus == 1 && prse->no_spec == 0)
+	else if (prse->flag_minus == 1 && prse->no_spec == 0)
 	{
 		write(STDOUT_FILENO, &s, 1);
 		n_digit += write_width(prse->width, prse->precision, 0, 1);
-		return (n_digit);
+		return (n_digit + 1);
 	}
 	write(STDOUT_FILENO, &s, 1);
 	return (n_digit + 1);

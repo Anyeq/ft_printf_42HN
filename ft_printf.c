@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 18:22:55 by asando            #+#    #+#             */
-/*   Updated: 2025/04/24 13:03:47 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/25 13:39:51 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -58,6 +58,16 @@ static int	print_arg(const char *fmt, t_prse *prse, va_list args, int *iter)
 	return (n_char);
 }
 
+static int	eol_case(const char s, t_prse *prse)
+{
+	if (s == '\0')
+	{
+		free(prse);
+		return (1);
+	}
+	return (0);
+}
+
 int	ft_printf(const char *format, ...)
 {
 	int		i;
@@ -76,7 +86,7 @@ int	ft_printf(const char *format, ...)
 		while (format[i] == '%')
 		{
 			n_char += print_arg(&format[i], prse_rslt, arg_list, &i);
-			if (format[i] == '\0')
+			if (eol_case(format[i], prse_rslt))
 				return (n_char);
 		}
 		n_char += printf_out(format, &i);
