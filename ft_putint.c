@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/04/25 12:17:39 by asando           ###   ########.fr       */
+/*   Updated: 2025/04/29 14:19:19 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -54,6 +54,31 @@ static void	print_arg(int n, int f_dot, int precision)
 	return ;
 }
 
+static int	add_format(t_prse *prse, int n, int prcs, int nstr)
+{
+	int	nchar;
+	int	nstr_prcs;
+
+	nchar = 0;
+	nstr_prcs = nstr;
+	if (n < 0)
+		nstr_prcs = nstr - 1;
+	if (prse->flag_zero == 1 && prse->flag_dot == 0)
+	{
+		nchar += write_sign(prse, n, NULL);
+		nchar += write_width(prse->width, prcs, prse->flag_zero, nstr);
+		print_arg(n, prse->flag_dot, prse->precision);
+	}
+	else
+	{
+		nchar += write_width(prse->width, prcs, 0, nstr);
+		nchar += write_sign(prse, n, NULL);
+		nchar += write_precision(prse->precision, nstr_prcs);
+		print_arg(n, prse->flag_dot, prse->precision);
+	}
+	return (nchar);
+}
+
 int	ft_putint(int n, t_prse *prse)
 {
 	int	nd;
@@ -62,17 +87,17 @@ int	ft_putint(int n, t_prse *prse)
 	int	prcs;
 
 	nstr = count_digit_int(n);
-	nstr_prcs = count_digit_int(n);
+	nstr_prcs = nstr;
 	nd = nstr;
 	prcs = prse->precision;
 	width_precision_sign(n, prse->flag_plus, &nstr, &prcs);
-	if (prse->flag_minus == 0)
+	if (prse->flag_space == 1 && n >= 0)
 	{
-		nd += write_width(prse->width, prcs, prse->flag_zero, nstr);
-		nd += write_sign(prse, n, NULL);
-		nd += write_precision(prse->precision, nstr_prcs);
-		print_arg(n, prse->flag_dot, prse->precision);
+		write(STDOUT_FILENO, " ", 1);
+		nd++;
 	}
+	if (prse->flag_minus == 0)
+		nd += add_format(prse, n, prcs, nstr);
 	else if (prse->flag_minus == 1)
 	{
 		nd += write_sign(prse, n, NULL);
