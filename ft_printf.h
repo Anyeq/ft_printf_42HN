@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 20:01:31 by asando            #+#    #+#             */
-/*   Updated: 2025/04/25 12:17:21 by asando           ###   ########.fr       */
+/*   Updated: 2025/05/04 13:13:35 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FT_PRINTF_H
@@ -29,6 +29,7 @@ typedef struct s_prse
 	int	flag_plus;
 	int	flag_hashtag;
 	int	flag_space;
+	int	unsigned_int;
 	int	no_spec;
 }	t_prse;
 int		parse_format(const char *fmt_str, t_prse *prse_rslt);
@@ -43,6 +44,7 @@ int		write_width(int width, int precision, int f_zero, int nstr);
 int		write_precision(int precision, int nstr);
 int		write_arg(unsigned char s, va_list arg, t_prse *prse, int *i);
 int		write_sign(t_prse *prse, int num, char *sign);
+int		write_space(t_prse *prse, int *nstr);
 int		count_digit_ptr(uintptr_t n);
 int		count_digit_int(int n);
 int		count_digit_uint(unsigned int n);

@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/04/29 13:25:48 by asando           ###   ########.fr       */
+/*   Updated: 2025/05/04 13:00:59 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -47,6 +47,7 @@ int	ft_putnum_base(unsigned int n, int nbase, const char *base, t_prse *prse)
 	sign = sign_choose(prse, n, base);
 	nstr = count_digit_nbase(n, nbase);
 	nd = nstr;
+	prse->unsigned_int = 1;
 	if (prse->flag_minus == 0)
 	{
 		nd += write_width(prse->width, prse->precision, prse->flag_zero, nstr);

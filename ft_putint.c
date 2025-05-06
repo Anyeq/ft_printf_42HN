@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/04/29 14:19:19 by asando           ###   ########.fr       */
+/*   Updated: 2025/05/04 13:12:44 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -91,11 +91,8 @@ int	ft_putint(int n, t_prse *prse)
 	nd = nstr;
 	prcs = prse->precision;
 	width_precision_sign(n, prse->flag_plus, &nstr, &prcs);
-	if (prse->flag_space == 1 && n >= 0)
-	{
-		write(STDOUT_FILENO, " ", 1);
-		nd++;
-	}
+	if (n >= 0)
+		nd += write_space(prse, &nstr);
 	if (prse->flag_minus == 0)
 		nd += add_format(prse, n, prcs, nstr);
 	else if (prse->flag_minus == 1)
