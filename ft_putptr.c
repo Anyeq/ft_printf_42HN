@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/05/04 13:44:13 by asando           ###   ########.fr       */
+/*   Updated: 2025/05/12 14:17:19 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -23,22 +23,22 @@ static int	null_case(t_prse *prse)
 {
 	int	nd;
 
-	nd = 5;
+	nd = 3;
 	if ((prse->width > 0 || prse->precision > 0) && prse->flag_minus == 0)
 	{
-		nd += write_width(prse->width, prse->precision, prse->flag_zero, 5);
-		write(STDOUT_FILENO, "(nil)", 5);
+		nd += write_width(prse->width, prse->precision, prse->flag_zero, 3);
+		write(STDOUT_FILENO, "0x0", 3);
 		return (nd);
 	}
 	else if ((prse->width > 0 || prse->precision > 0) && prse->flag_minus == 1)
 	{
-		write(STDOUT_FILENO, "(nil)", 5);
-		nd += write_width(prse->width, prse->precision, prse->flag_zero, 5);
+		write(STDOUT_FILENO, "0x0", 3);
+		nd += write_width(prse->width, prse->precision, prse->flag_zero, 3);
 		return (nd);
 	}
 	else
 	{
-		write(STDOUT_FILENO, "(nil)", 5);
+		write(STDOUT_FILENO, "0x0", 3);
 		return (nd);
 	}
 	return (nd);
