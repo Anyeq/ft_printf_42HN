@@ -6,15 +6,15 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 18:22:55 by asando            #+#    #+#             */
-/*   Updated: 2025/05/15 12:25:42 by asando           ###   ########.fr       */
+/*   Updated: 2025/05/15 13:08:25 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
 
-static int	printf_out(const char *fmt, int *i)
+static int	printf_out(const char *fmt, int *i, ssize_t err)
 {
-	if (write(1, &fmt[*i], 1) == -1)
-		return (-1);
+	if (write(1, &fmt[*i], 1) <= 1)
+		*err = -1;
 	*i += 1;
 	return (1);
 }
@@ -75,7 +75,9 @@ int	ft_printf(const char *format, ...)
 	int		n_char;
 	va_list	arg_list;
 	t_prse	*prse_rslt;
+	ssize_t	err;
 
+	err = 0;
 	i = 0;
 	n_char = check_format(format);
 	prse_rslt = malloc(sizeof(t_prse));
@@ -90,9 +92,11 @@ int	ft_printf(const char *format, ...)
 			if (eol_case(format[i], prse_rslt))
 				return (n_char);
 		}
-		n_char += printf_out(format, &i);
+		n_char += printf_out(format, &i, &err);
 	}
 	free(prse_rslt);
 	va_end(arg_list);
+	if (err == -1)
+		return (-1);
 	return (n_char);
 }
