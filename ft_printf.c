@@ -6,14 +6,15 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 18:22:55 by asando            #+#    #+#             */
-/*   Updated: 2025/04/25 13:39:51 by asando           ###   ########.fr       */
+/*   Updated: 2025/05/15 12:25:42 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
 
 static int	printf_out(const char *fmt, int *i)
 {
-	write(1, &fmt[*i], 1);
+	if (write(1, &fmt[*i], 1) == -1)
+		return (-1);
 	*i += 1;
 	return (1);
 }
@@ -79,7 +80,7 @@ int	ft_printf(const char *format, ...)
 	n_char = check_format(format);
 	prse_rslt = malloc(sizeof(t_prse));
 	if (!prse_rslt)
-		return (0);
+		return (-1);
 	va_start(arg_list, format);
 	while (format[i] != '\0' && n_char >= 0)
 	{
