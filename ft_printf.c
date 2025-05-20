@@ -6,15 +6,15 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 18:22:55 by asando            #+#    #+#             */
-/*   Updated: 2025/05/15 13:08:25 by asando           ###   ########.fr       */
+/*   Updated: 2025/05/20 07:41:43 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
 
 static int	printf_out(const char *fmt, int *i, ssize_t err)
 {
-	if (write(1, &fmt[*i], 1) <= 1)
-		*err = -1;
+	if (write(1, &fmt[*i], 1) < 1)
+		return (-1);
 	*i += 1;
 	return (1);
 }
@@ -25,7 +25,7 @@ static int	check_format(const char *format)
 	int	sign_exist;
 
 	i = 0;
-	while (format[i] != '\0')
+	while (format[i])
 	{
 		if (format[i] == '%')
 		{
@@ -37,7 +37,7 @@ static int	check_format(const char *format)
 					return (-1);
 				i++;
 			}
-			if (format[i] == '%')
+			if (format[i] == '%' || ft_isalpha(format[i]))
 				sign_exist = 0;
 		}
 		i++;
@@ -60,8 +60,7 @@ static int	print_arg(const char *fmt, t_prse *prse, va_list args, int *iter)
 }
 
 static int	eol_case(const char s, t_prse *prse)
-{
-	if (s == '\0')
+{	if (s == '\0')
 	{
 		free(prse);
 		return (1);
@@ -75,9 +74,7 @@ int	ft_printf(const char *format, ...)
 	int		n_char;
 	va_list	arg_list;
 	t_prse	*prse_rslt;
-	ssize_t	err;
 
-	err = 0;
 	i = 0;
 	n_char = check_format(format);
 	prse_rslt = malloc(sizeof(t_prse));
@@ -96,7 +93,5 @@ int	ft_printf(const char *format, ...)
 	}
 	free(prse_rslt);
 	va_end(arg_list);
-	if (err == -1)
-		return (-1);
 	return (n_char);
 }
