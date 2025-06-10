@@ -83,7 +83,8 @@ int	parse_format(const char *fmt_str, t_prse *prse_rslt)
 	prse_init(prse_rslt);
 	while (!ft_isalpha(fmt_str[i]) && fmt_str[i] != '%' && fmt_str[i] != '\0')
 	{
-		if (prse_rslt->width == 0 && (fmt_str[i] != '.' || fmt_str[i] == '0'))
+		if (prse_rslt->width == 0 &&
+			(fmt_str[i] != '.' || fmt_str[i] == '0'))
 			i += set_flags(&fmt_str[i], prse_rslt);
 		if (fmt_str[i] == '.' || ft_isdigit(fmt_str[i]))
 			i += count_width_precision(&fmt_str[i], prse_rslt);
