@@ -6,12 +6,12 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 13:50:53 by asando            #+#    #+#             */
-/*   Updated: 2025/04/25 13:56:07 by asando           ###   ########.fr       */
+/*   Updated: 2025/07/15 11:46:57 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
 
-static int	putstr_out(const char *s, int precision)
+static int	putstr_out(const char *s, int precision, t_prse *prse)
 {
 	int	i;
 
@@ -20,7 +20,8 @@ static int	putstr_out(const char *s, int precision)
 	{
 		if (precision != 0 && i == precision)
 			return (i);
-		write(STDOUT_FILENO, &s[i], 1);
+		if (ft_printchar(s[i], prse) < 0)
+			return (-1);
 		i++;
 	}
 	return (i);
@@ -33,10 +34,16 @@ static int	print_arg(t_prse *prse, const char *s)
 	n_digit = 0;
 	if (prse->flag_dot == 1 && prse->precision == 0)
 	{
-		write(STDOUT_FILENO, "", 1);
+		if (ft_printchar('\0', prse) < 0)
+		{
+			prse->write_err = 1;
+			return (-1);
+		}
 		return (n_digit);
 	}
 	n_digit += putstr_out(s, prse->precision);
+	if (n_digit == -1)
+		prse->write_err = 1;
 	return (n_digit);
 }
 
@@ -53,10 +60,14 @@ static int	null_case(t_prse *prse)
 	{
 		nd += write_width(prse->width, prse->precision, prse->flag_zero, nstr);
 		nd += print_arg(prse, "(null)");
+		if (prse->write_err == 1)
+			return (-1);
 	}
 	else if (prse->flag_minus == 1)
 	{
 		nd += print_arg(prse, "(null)");
+		if (prse->write_err == 1)
+			return (-1);
 		nd += write_width(prse->width, prse->precision, prse->flag_zero, nstr);
 	}
 	return (nd);
@@ -73,10 +84,14 @@ static int	print_str(const char *s, t_prse *prse, int precision, int len_str)
 	{
 		n_digit += write_width(prse->width, precision, 0, len_str);
 		n_digit += print_arg(prse, s);
+		if (prse->write_err == 1)
+			return (-1);
 	}
 	else if (prse->flag_minus == 1)
 	{
 		n_digit += print_arg(prse, s);
+		if (prse->write_err == 1)
+			return (-1);
 		n_digit += write_width(prse->width, precision, 0, len_str);
 	}
 	return (n_digit);
@@ -98,5 +113,7 @@ int	ft_putstr(const char *s, t_prse *prse)
 	else if (len_str <= precision && precision != 0)
 		precision = 0;
 	n_digit += print_str(s, prse, precision, len_str);
+	if (prse->write_err == 1)
+		return (-1);
 	return (n_digit);
 }

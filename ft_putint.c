@@ -6,23 +6,19 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/05/15 12:07:40 by asando           ###   ########.fr       */
+/*   Updated: 2025/07/15 12:29:16 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
 
-static void	putint_out(int n)
+static int	putint_out(int n, t_prse *prse)
 {
 	char	c;
 
-	if (n == 0)
-	{
-		write(1, "0", 1);
-		return ;
-	}
 	if (n == INT_MIN)
 	{
-		write(1, "2147483648", 10);
+		if (write(1, "2147483648", 10) < 10)
+			prse->write_err = 1;
 		return ;
 	}
 	if (n < 0)
@@ -30,7 +26,11 @@ static void	putint_out(int n)
 	if (n / 10 > 0)
 		putint_out(n / 10);
 	c = (n % 10) + '0';
-	write(1, &c, 1);
+	if (write(1, &c, 1) < 1)
+	{
+		prse->write_err = 1;
+		return ;
+	}
 	return ;
 }
 
@@ -43,15 +43,18 @@ static void	width_precision_sign(int n, int f_plus, int *nstr, int *prcs)
 	}
 }
 
-static void	print_arg(int n, int f_dot, int precision)
+static int	print_arg(int n, int f_dot, int precision, t_prse *prse)
 {
 	if (f_dot == 1 && precision == 0)
 	{
-		write(STDOUT_FILENO, "", 1);
-		return ;
+		if (ft_printchar("", prse) == 0) //check this in the future
+			return (-1);
+		return (1);
 	}
 	putint_out(n);
-	return ;
+	if (prse->write_err == 1)
+		return (-1);
+	return (1);
 }
 
 static int	add_format(t_prse *prse, int n, int prcs, int nstr)
@@ -67,14 +70,16 @@ static int	add_format(t_prse *prse, int n, int prcs, int nstr)
 	{
 		nchar += write_sign(prse, n, NULL);
 		nchar += write_width(prse->width, prcs, prse->flag_zero, nstr);
-		print_arg(n, prse->flag_dot, prse->precision);
+		if (print_arg(n, prse->flag_dot, prse->precision, prse) != 1)
+			return (-1);
 	}
 	else
 	{
 		nchar += write_width(prse->width, prcs, 0, nstr);
 		nchar += write_sign(prse, n, NULL);
 		nchar += write_precision(prse->precision, nstr_prcs);
-		print_arg(n, prse->flag_dot, prse->precision);
+		if (print_arg(n, prse->flag_dot, prse->precision, prse) != 1)
+			return (-1);
 	}
 	return (nchar);
 }
@@ -102,5 +107,7 @@ int	ft_putint(int n, t_prse *prse)
 		print_arg(n, prse->flag_dot, prse->precision);
 		nd += write_width(prse->width, prcs, prse->flag_zero, nstr);
 	}
+	if (prse->write_err == 1)
+		return (-1);
 	return (nd);
 }

@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:40:56 by asando            #+#    #+#             */
-/*   Updated: 2025/05/04 13:54:11 by asando           ###   ########.fr       */
+/*   Updated: 2025/07/15 11:31:04 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -35,7 +35,7 @@ int	write_width(int width, int precision, int f_zero, int nstr)
 		if (f_zero == 1)
 			write(STDOUT_FILENO, "0", 1);
 		else if (precision > 0 || f_zero == 0)
-			write(STDOUT_FILENO, " ", 1);
+			write(STDOUT_FILENO, "0", 1);
 		nchar++;
 	}
 	return (nchar);

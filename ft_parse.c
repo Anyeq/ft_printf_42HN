@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 19:58:26 by asando            #+#    #+#             */
-/*   Updated: 2025/05/15 13:14:33 by asando           ###   ########.fr       */
+/*   Updated: 2025/06/10 15:54:37 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -46,7 +46,6 @@ static void	prse_init(t_prse *prse)
 	prse->flag_space = 0;
 	prse->flag_plus = 0;
 	prse->flag_hashtag = 0;
-	prse->no_spec = 0;
 	prse->unsigned_int = 0;
 	prse->write_err = 0;
 }
@@ -89,7 +88,5 @@ int	parse_format(const char *fmt_str, t_prse *prse_rslt)
 		if (fmt_str[i] == '.' || ft_isdigit(fmt_str[i]))
 			i += count_width_precision(&fmt_str[i], prse_rslt);
 	}
-	if (fmt_str[i] == '%')
-		prse_rslt->no_spec = 1;
 	return (i);
 }
