@@ -6,22 +6,10 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:40:56 by asando            #+#    #+#             */
-/*   Updated: 2025/07/15 11:31:04 by asando           ###   ########.fr       */
+/*   Updated: 2025/07/15 16:36:35 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
-
-static int	count_str_size(int precision, int nstr)
-{
-	int	str_size;
-
-	str_size = 0;
-	if (precision > nstr)
-		str_size = precision;
-	else if (precision <= nstr)
-		str_size = nstr;
-	return (str_size);
-}
 
 int	write_width(int width, int precision, int f_zero, int nstr)
 {

@@ -6,16 +6,20 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/05/12 14:17:19 by asando           ###   ########.fr       */
+/*   Updated: 2025/07/15 12:56:55 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
 
-static void	putptr_out(uintptr_t n)
+static void	putptr_out(uintptr_t n, t_prse *prse)
 {
 	if (n / 16 > 0)
 		putptr_out(n / 16);
-	write(STDOUT_FILENO, &("0123456789abcdef"[n % 16]), 1);
+	if (write(STDOUT_FILENO, &("0123456789abcdef"[n % 16]), 1) < 1)
+	{
+		prse->write_err = 1;
+		return ;
+	}
 	return ;
 }
 
@@ -27,18 +31,21 @@ static int	null_case(t_prse *prse)
 	if ((prse->width > 0 || prse->precision > 0) && prse->flag_minus == 0)
 	{
 		nd += write_width(prse->width, prse->precision, prse->flag_zero, 3);
-		write(STDOUT_FILENO, "0x0", 3);
+		if (write(STDOUT_FILENO, "0x0", 3) < 3)
+			prse->write_err = 1;
 		return (nd);
 	}
 	else if ((prse->width > 0 || prse->precision > 0) && prse->flag_minus == 1)
 	{
-		write(STDOUT_FILENO, "0x0", 3);
+		if (write(STDOUT_FILENO, "0x0", 3) < 3)
+			prse->write_err = 1;
 		nd += write_width(prse->width, prse->precision, prse->flag_zero, 3);
 		return (nd);
 	}
 	else
 	{
-		write(STDOUT_FILENO, "0x0", 3);
+		if (write(STDOUT_FILENO, "0x0", 3) < 3)
+			prse->write_err = 1;
 		return (nd);
 	}
 	return (nd);
@@ -52,10 +59,14 @@ static int	putptr_main(void *n, t_prse *prse)
 	if (n == NULL)
 	{
 		n_digit += null_case(prse);
+		if (prse->write_err == 1)
+			return (-1);
 		return (n_digit);
 	}
 	n_digit = count_digit_ptr((uintptr_t)n);
-	putptr_out((uintptr_t)n);
+	putptr_out((uintptr_t)n, prse);
+	if (prse->write_err == 1)
+		return (-1);
 	return (n_digit);
 }
 
@@ -103,5 +114,7 @@ int	ft_putptr(void *n, t_prse *prse)
 	}
 	else if (n == NULL)
 		nd += putptr_main(n, prse);
+	if (prse->write_err == 1)
+		return (-1);
 	return (nd);
 }

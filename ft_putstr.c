@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 13:50:53 by asando            #+#    #+#             */
-/*   Updated: 2025/07/15 11:46:57 by asando           ###   ########.fr       */
+/*   Updated: 2025/07/15 16:41:23 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -20,7 +20,7 @@ static int	putstr_out(const char *s, int precision, t_prse *prse)
 	{
 		if (precision != 0 && i == precision)
 			return (i);
-		if (ft_printchar(s[i], prse) < 0)
+		if (ft_printchar(s[i], prse) == 0)
 			return (-1);
 		i++;
 	}
@@ -34,16 +34,11 @@ static int	print_arg(t_prse *prse, const char *s)
 	n_digit = 0;
 	if (prse->flag_dot == 1 && prse->precision == 0)
 	{
-		if (ft_printchar('\0', prse) < 0)
-		{
-			prse->write_err = 1;
+		if (ft_printchar('\0', prse) == 0)
 			return (-1);
-		}
 		return (n_digit);
 	}
 	n_digit += putstr_out(s, prse->precision);
-	if (n_digit == -1)
-		prse->write_err = 1;
 	return (n_digit);
 }
 

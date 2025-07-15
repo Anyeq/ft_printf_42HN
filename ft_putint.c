@@ -6,12 +6,12 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/07/15 12:29:16 by asando           ###   ########.fr       */
+/*   Updated: 2025/07/15 16:44:37 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
 
-static int	putint_out(int n, t_prse *prse)
+static void	putint_out(int n, t_prse *prse)
 {
 	char	c;
 
@@ -24,7 +24,7 @@ static int	putint_out(int n, t_prse *prse)
 	if (n < 0)
 		n = n * -1;
 	if (n / 10 > 0)
-		putint_out(n / 10);
+		putint_out(n / 10, prse);
 	c = (n % 10) + '0';
 	if (write(1, &c, 1) < 1)
 	{
@@ -47,11 +47,11 @@ static int	print_arg(int n, int f_dot, int precision, t_prse *prse)
 {
 	if (f_dot == 1 && precision == 0)
 	{
-		if (ft_printchar("", prse) == 0) //check this in the future
+		if (ft_printchar("", prse) == 0)
 			return (-1);
 		return (1);
 	}
-	putint_out(n);
+	putint_out(n, prse);
 	if (prse->write_err == 1)
 		return (-1);
 	return (1);

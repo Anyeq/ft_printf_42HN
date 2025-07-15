@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:09:20 by asando            #+#    #+#             */
-/*   Updated: 2025/04/23 23:02:49 by asando           ###   ########.fr       */
+/*   Updated: 2025/07/15 16:37:10 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -71,4 +71,16 @@ int	count_digit_nbase(unsigned int n, int nbase)
 		n_digit++;
 	}
 	return (n_digit);
+}
+
+int	count_str_size(int precision, int nstr)
+{
+	int	str_size;
+
+	str_size = 0;
+	if (precision > nstr)
+		str_size = precision;
+	else if (precision <= nstr)
+		str_size = nstr;
+	return (str_size);
 }
