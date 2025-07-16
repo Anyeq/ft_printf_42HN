@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 19:58:26 by asando            #+#    #+#             */
-/*   Updated: 2025/07/15 13:54:55 by asando           ###   ########.fr       */
+/*   Updated: 2025/07/16 12:10:56 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -55,7 +55,7 @@ static int	set_flags(const char *fmt_str, t_prse *prse)
 	int	i;
 
 	i = 0;
-	while (!ft_isalnum(fmt_str[i]) || fmt_str[i] == '0')
+	if (!ft_isalnum(fmt_str[i]) || fmt_str[i] == '0')
 	{
 		if (fmt_str[i] == '0')
 			prse->flag_zero = 1;

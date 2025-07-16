@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/22 09:40:56 by asando            #+#    #+#             */
-/*   Updated: 2025/07/15 16:36:35 by asando           ###   ########.fr       */
+/*   Updated: 2025/07/16 12:46:38 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -23,7 +23,7 @@ int	write_width(int width, int precision, int f_zero, int nstr)
 		if (f_zero == 1)
 			write(STDOUT_FILENO, "0", 1);
 		else if (precision > 0 || f_zero == 0)
-			write(STDOUT_FILENO, "0", 1);
+			write(STDOUT_FILENO, " ", 1);
 		nchar++;
 	}
 	return (nchar);
@@ -51,7 +51,8 @@ int	write_sign(t_prse *prse, int num, char *sign)
 		return (nchar);
 	if (num < 0)
 	{
-		write(STDOUT_FILENO, "-", 1);
+		if (write(STDOUT_FILENO, "-", 1) < 1)
+			prse->write_err = 1;
 		nchar++;
 	}
 	else if (num >= 0 && prse->flag_plus == 1 && prse->unsigned_int != 1)
@@ -61,7 +62,8 @@ int	write_sign(t_prse *prse, int num, char *sign)
 	}
 	if (sign != NULL)
 	{
-		write(STDOUT_FILENO, sign, 2);
+		if (write(STDOUT_FILENO, sign, 2) < 2)
+			prse->write_err = 1;
 		nchar += 2;
 	}
 	return (nchar);

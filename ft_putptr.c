@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/07/15 17:14:37 by asando           ###   ########.fr       */
+/*   Updated: 2025/07/16 12:47:27 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -56,6 +56,8 @@ static int	putptr_main(void *n, t_prse *prse)
 	int	n_digit;
 
 	n_digit = 0;
+	if (prse->write_err == 1)
+		return (-1);
 	if (n == NULL)
 	{
 		n_digit += null_case(prse);

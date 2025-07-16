@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 13:50:53 by asando            #+#    #+#             */
-/*   Updated: 2025/07/15 17:16:24 by asando           ###   ########.fr       */
+/*   Updated: 2025/07/16 12:12:29 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -46,25 +46,27 @@ static int	null_case(t_prse *prse)
 {
 	int	nd;
 	int	nstr;
+	int	tmp_precision;
 
 	nd = 0;
 	nstr = 6;
-	if (prse->flag_dot == 1 && prse->precision == 0)
+	tmp_precision = prse->precision;
+	if (prse->flag_dot == 1 && (prse->precision == 0 || prse->precision < nstr))
 		nstr = 0;
+	else if (prse->flag_dot == 1 && prse->precision > nstr)
+		tmp_precision = 0;
 	if (prse->flag_minus == 0)
 	{
-		nd += write_width(prse->width, prse->precision, prse->flag_zero, nstr);
+		nd += write_width(prse->width, tmp_precision, prse->flag_zero, nstr);
 		nd += print_arg(prse, "(null)");
-		if (prse->write_err == 1)
-			return (-1);
 	}
 	else if (prse->flag_minus == 1)
 	{
 		nd += print_arg(prse, "(null)");
-		if (prse->write_err == 1)
-			return (-1);
-		nd += write_width(prse->width, prse->precision, prse->flag_zero, nstr);
+		nd += write_width(prse->width, tmp_precision, prse->flag_zero, nstr);
 	}
+	if (prse->write_err == 1)
+		return (-1);
 	return (nd);
 }
 
@@ -79,16 +81,14 @@ static int	print_str(const char *s, t_prse *prse, int precision, int len_str)
 	{
 		n_digit += write_width(prse->width, precision, 0, len_str);
 		n_digit += print_arg(prse, s);
-		if (prse->write_err == 1)
-			return (-1);
 	}
 	else if (prse->flag_minus == 1)
 	{
 		n_digit += print_arg(prse, s);
-		if (prse->write_err == 1)
-			return (-1);
 		n_digit += write_width(prse->width, precision, 0, len_str);
 	}
+	if (prse->write_err == 1)
+		return (-1);
 	return (n_digit);
 }
 
