@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/07/15 16:44:37 by asando           ###   ########.fr       */
+/*   Updated: 2025/07/15 17:13:46 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -47,7 +47,7 @@ static int	print_arg(int n, int f_dot, int precision, t_prse *prse)
 {
 	if (f_dot == 1 && precision == 0)
 	{
-		if (ft_printchar("", prse) == 0)
+		if (ft_printchar('\0', prse) == 0)
 			return (-1);
 		return (1);
 	}
@@ -104,7 +104,7 @@ int	ft_putint(int n, t_prse *prse)
 	{
 		nd += write_sign(prse, n, NULL);
 		nd += write_precision(prse->precision, nstr_prcs);
-		print_arg(n, prse->flag_dot, prse->precision);
+		print_arg(n, prse->flag_dot, prse->precision, prse);
 		nd += write_width(prse->width, prcs, prse->flag_zero, nstr);
 	}
 	if (prse->write_err == 1)

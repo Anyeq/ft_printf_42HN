@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 20:01:31 by asando            #+#    #+#             */
-/*   Updated: 2025/06/10 15:59:11 by asando           ###   ########.fr       */
+/*   Updated: 2025/07/15 17:11:02 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FT_PRINTF_H
@@ -33,7 +33,7 @@ typedef struct s_prse
 	int	write_err;
 }	t_prse;
 int		parse_format(const char *fmt_str, t_prse *prse_rslt);
-int		ft_printchar(unsigned int chr, t_prse *prse);
+int		ft_printchar(char chr, t_prse *prse);
 int		ft_putchar(unsigned int s, t_prse *prse);
 int		ft_putstr(const char *s, t_prse *prse);
 int		ft_putptr(void *n, t_prse *prse);
@@ -50,6 +50,7 @@ int		count_digit_ptr(uintptr_t n);
 int		count_digit_int(int n);
 int		count_digit_uint(unsigned int n);
 int		count_digit_nbase(unsigned int n, int nbase);
+int		count_str_size(int precision, int nstr);
 int		ft_printf(const char *fmt, ...);
 
 #endif

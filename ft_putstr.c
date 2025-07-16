@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 13:50:53 by asando            #+#    #+#             */
-/*   Updated: 2025/07/15 16:41:23 by asando           ###   ########.fr       */
+/*   Updated: 2025/07/15 17:16:24 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -38,7 +38,7 @@ static int	print_arg(t_prse *prse, const char *s)
 			return (-1);
 		return (n_digit);
 	}
-	n_digit += putstr_out(s, prse->precision);
+	n_digit += putstr_out(s, prse->precision, prse);
 	return (n_digit);
 }
 

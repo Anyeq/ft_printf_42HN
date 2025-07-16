@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/07/15 12:56:55 by asando           ###   ########.fr       */
+/*   Updated: 2025/07/15 17:14:37 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -14,7 +14,7 @@
 static void	putptr_out(uintptr_t n, t_prse *prse)
 {
 	if (n / 16 > 0)
-		putptr_out(n / 16);
+		putptr_out(n / 16, prse);
 	if (write(STDOUT_FILENO, &("0123456789abcdef"[n % 16]), 1) < 1)
 	{
 		prse->write_err = 1;
