@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/07/15 17:13:46 by asando           ###   ########.fr       */
+/*   Updated: 2025/07/16 14:58:19 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -51,7 +51,8 @@ static int	print_arg(int n, int f_dot, int precision, t_prse *prse)
 			return (-1);
 		return (1);
 	}
-	putint_out(n, prse);
+	if (prse->write_err != 1)
+		putint_out(n, prse);
 	if (prse->write_err == 1)
 		return (-1);
 	return (1);
