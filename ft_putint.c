@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/07/17 10:54:09 by asando           ###   ########.fr       */
+/*   Updated: 2025/07/17 11:56:52 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -48,9 +48,14 @@ static void	width_precision_sign(int n, int f_plus, int *nstr, int *prcs)
 
 static int	print_arg(int n, int f_dot, int precision, t_prse *prse)
 {
-	if (f_dot == 1 && precision == 0)
+	char	char_print;
+
+	char_print = ' ';
+	if (prse->width == 0)
+		char_print = '\0';
+	if (f_dot == 1 && precision == 0 && n == 0)
 	{
-		if (ft_printchar('\0', prse) == 0)
+		if (ft_printchar(char_print, prse) == 0)
 			return (-1);
 		return (1);
 	}
