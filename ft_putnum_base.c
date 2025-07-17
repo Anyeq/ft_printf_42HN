@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/07/17 10:59:06 by asando           ###   ########.fr       */
+/*   Updated: 2025/07/17 12:37:56 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -50,6 +50,33 @@ static char	*sign_choose(t_prse *prse, unsigned int num, const char *base)
 	return (str);
 }
 
+static int	print_arg(int n, int nbase, const char *base, t_prse *prse)
+{
+	char	char_print;
+
+	char_print = ' ';
+	if (prse->width == 0)
+		char_print = '\0';
+	if (prse->flag_dot == 1 && prse->precision == 0 && n == 0)
+	{
+		if (ft_printchar(char_print, prse) == 0)
+			return (-1);
+		return (1);
+	}
+	if (prse->write_err != 1)
+		putnumbase_out(n, nbase, base, prse);
+	if (prse->write_err == 1)
+		return (-1);
+	return (1);
+}
+
+static void	condition_init(t_prse *prse)
+{
+	prse->unsigned_int = 1;
+	if (prse->flag_dot == 1)
+		prse->flag_zero = 0;
+}
+
 int	ft_putnum_base(unsigned int n, int nbase, const char *base, t_prse *prse)
 {
 	int		nstr;
@@ -59,19 +86,19 @@ int	ft_putnum_base(unsigned int n, int nbase, const char *base, t_prse *prse)
 	sign = sign_choose(prse, n, base);
 	nstr = count_digit_nbase(n, nbase);
 	nd = nstr;
-	prse->unsigned_int = 1;
+	condition_init(prse);
 	if (prse->flag_minus == 0)
 	{
 		nd += write_width(prse->width, prse->precision, prse->flag_zero, nstr);
 		nd += write_sign(prse, 42, sign);
 		nd += write_precision(prse->precision, nstr);
-		putnumbase_out(n, nbase, base, prse);
+		print_arg(n, nbase, base, prse);
 	}
 	else if (prse->flag_minus == 1)
 	{
 		nd += write_sign(prse, 42, sign);
 		nd += write_precision(prse->precision, nstr);
-		putnumbase_out(n, nbase, base, prse);
+		print_arg(n, nbase, base, prse);
 		nd += write_width(prse->width, prse->precision, prse->flag_zero, nstr);
 	}
 	if (prse->write_err == 1)
