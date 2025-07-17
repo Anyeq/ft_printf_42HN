@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/07/16 15:02:45 by asando           ###   ########.fr       */
+/*   Updated: 2025/07/17 10:59:06 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -25,10 +25,13 @@ static void	putnumbase_out(unsigned int n, int nbase,
 	}
 	if (n / nbase > 0 && prse->write_err != 1)
 		putnumbase_out(n / nbase, nbase, base, prse);
-	if (write(1, &base[n % nbase], 1) < 1)
+	if (prse->write_err != 1)
 	{
-		prse->write_err = 1;
-		return ;
+		if (write(1, &base[n % nbase], 1) < 1)
+		{
+			prse->write_err = 1;
+			return ;
+		}
 	}
 	return ;
 }

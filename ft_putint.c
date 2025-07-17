@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/07/16 14:58:19 by asando           ###   ########.fr       */
+/*   Updated: 2025/07/17 10:54:09 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -23,13 +23,16 @@ static void	putint_out(int n, t_prse *prse)
 	}
 	if (n < 0)
 		n = n * -1;
-	if (n / 10 > 0)
+	if (n / 10 > 0 && prse->write_err != 1)
 		putint_out(n / 10, prse);
 	c = (n % 10) + '0';
-	if (write(1, &c, 1) < 1)
+	if (prse->write_err != 1)
 	{
-		prse->write_err = 1;
-		return ;
+		if (write(1, &c, 1) < 1)
+		{
+			prse->write_err = 1;
+			return ;
+		}
 	}
 	return ;
 }

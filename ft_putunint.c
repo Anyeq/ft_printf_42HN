@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/07/15 13:43:39 by asando           ###   ########.fr       */
+/*   Updated: 2025/07/17 10:56:33 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -24,13 +24,16 @@ static void	putunint_out(unsigned int n, t_prse *prse)
 		}
 		return ;
 	}
-	if (n / 10 > 0)
+	if (n / 10 > 0 && prse->write_err != 1)
 		putunint_out(n / 10, prse);
 	c = (n % 10) + '0';
-	if (write(1, &c, 1) < 1)
+	if (prse->write_err != 1)
 	{
-		prse->write_err = 1;
-		return ;
+		if (write(1, &c, 1) < 1)
+		{
+			prse->write_err = 1;
+			return ;
+		}
 	}
 	return ;
 }
