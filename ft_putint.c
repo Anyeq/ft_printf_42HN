@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/07/17 13:27:37 by asando           ###   ########.fr       */
+/*   Updated: 2025/07/17 14:29:05 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -73,7 +73,7 @@ static int	add_format(t_prse *prse, int n, int prcs, int nstr)
 
 	nchar = 0;
 	nstr_prcs = nstr;
-	if (n < 0)
+	if (n < 0 || prse->flag_space == 1)
 		nstr_prcs = nstr - 1;
 	if (prse->flag_zero == 1 && prse->flag_dot == 0)
 	{
