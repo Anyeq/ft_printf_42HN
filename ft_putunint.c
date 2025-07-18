@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/07/17 12:16:35 by asando           ###   ########.fr       */
+/*   Updated: 2025/07/18 10:50:56 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -65,6 +65,8 @@ int	ft_putunint(unsigned int n, t_prse *prse)
 
 	nstr = count_digit_uint(n);
 	nd = nstr;
+	if (prse->precision == 0 && prse->flag_dot == 1 && n == 0)
+		nd = 0;
 	if (prse->flag_dot == 1)
 		prse->flag_zero = 0;
 	if (prse->flag_minus == 0)
