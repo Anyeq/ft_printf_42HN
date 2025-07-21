@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 20:01:31 by asando            #+#    #+#             */
-/*   Updated: 2025/07/21 10:51:18 by asando           ###   ########.fr       */
+/*   Updated: 2025/07/21 15:03:54 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef FT_PRINTF_H
@@ -19,10 +19,10 @@
 # include <limits.h>
 # include "./libft/libft.h"
 
-# if defined (__APPLE__)
+# if defined(__APPLE__)
 #  define PTRNULL "0x0"
 #  define PTRNULL_NUM 3
-# elif defined (__linux__)
+# elif defined(__linux__)
 #  define PTRNULL "(nil)"
 #  define PTRNULL_NUM 5
 # endif
