@@ -6,7 +6,7 @@
 /*   By: asando <asando@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:01:30 by asando            #+#    #+#             */
-/*   Updated: 2025/07/16 12:47:27 by asando           ###   ########.fr       */
+/*   Updated: 2025/07/21 10:34:05 by asando           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -27,24 +27,24 @@ static int	null_case(t_prse *prse)
 {
 	int	nd;
 
-	nd = 3;
+	nd = PTRNULL_NUM;
 	if ((prse->width > 0 || prse->precision > 0) && prse->flag_minus == 0)
 	{
 		nd += write_width(prse->width, prse->precision, prse->flag_zero, 3);
-		if (write(STDOUT_FILENO, "0x0", 3) < 3)
+		if (write(STDOUT_FILENO, PTRNULL, PTRNULL_NUM) < PTRNULL_NUM)
 			prse->write_err = 1;
 		return (nd);
 	}
 	else if ((prse->width > 0 || prse->precision > 0) && prse->flag_minus == 1)
 	{
-		if (write(STDOUT_FILENO, "0x0", 3) < 3)
+		if (write(STDOUT_FILENO, PTRNULL, PTRNULL_NUM) < PTRNULL_NUM)
 			prse->write_err = 1;
 		nd += write_width(prse->width, prse->precision, prse->flag_zero, 3);
 		return (nd);
 	}
 	else
 	{
-		if (write(STDOUT_FILENO, "0x0", 3) < 3)
+		if (write(STDOUT_FILENO, PTRNULL, PTRNULL_NUM) < PTRNULL_NUM)
 			prse->write_err = 1;
 		return (nd);
 	}
